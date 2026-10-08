@@ -3,13 +3,6 @@ imds_train = imageDatastore('/Users/jade/Library/CloudStorage/OneDrive-UTS/melan
     'LabelSource', 'foldernames', ...
     'FileExtensions', {'.jpg'});
 
-% imds_small = subset(imds_train, 1:10);
-% for i = 1:10
-%     img = readimage(imds_small, i);
-%     disp(size(img))
-% end
-% disp("Subset test complete")
-
 num_train = numel(imds_train.Files);
 fprintf("Feature extraction on %d images...\n", num_train);
 
@@ -47,4 +40,10 @@ train_features = table(meanR, meanG, meanB, contrast, correlation, energy, homog
 train_features.Label = imds_train.Labels;
 
 disp("Feature extraction complete")
-save('train_features.mat', 'train_features');
+save('data/train_features.mat', 'train_features');
+
+% save classification learner model results
+save('rbfSVM.mat','rbfSVM');
+save('kNN.mat','kNN');
+save('linearSVM.mat','linearSVM');
+save('randomForest.mat','randomForest');
