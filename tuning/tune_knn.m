@@ -7,7 +7,7 @@ class = categorical({'benign'; 'malignant'});
 rng(1);
 cvp = cvpartition(response, 'KFold', 5);
 
-k_values = [1 3 5 10 15 25 50];
+k_values = [1 3 5 10 15 25 50 60 75 85 100];
 dist = {'euclidean', 'cityblock', 'cosine'};
 weights = {'equal', 'inverse', 'squaredinverse'};
 
@@ -77,7 +77,7 @@ disp("Best k-NN setting:");
 disp(best_knn);
 
 % save results
-writetable(results_knn, 'results/tune_knn.csv');
+writetable(results_knn, 'results/tune_knn_v1.csv');
 
 figure;
 tiledlayout(1, num_dist, 'TileSpacing', 'compact');
@@ -95,4 +95,4 @@ for d = 1:num_dist
     legend(weights, 'Location', 'best');
 end
 sgtitle('k-NN malignant recall, 5-fold CV');
-saveas(gcf, 'results/figures/knn_recall_lines.png');
+saveas(gcf, 'results/figures/knn_recall_lines_v1.png');
