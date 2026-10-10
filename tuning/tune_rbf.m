@@ -7,8 +7,8 @@ class = categorical({'benign'; 'malignant'});
 rng(1);
 cvp = cvpartition(response, 'KFold', 5);
 
-kernel = [0.1 0.3 0.66 1 2 5 10];
-box = [0.1 1 10 100];
+kernel = [0.1 0.3 0.6 1 2 4 5 7 10];
+box = [0.1 1 10 50 100 150];
 num_ks = numel(kernel);
 num_bc = numel(box);
 num_runs = num_ks * num_bc;
@@ -71,7 +71,7 @@ disp("Best RBF SVM setting:");
 disp(best_rbf);
 
 % save results
-writetable(results_rbf, 'results/tune_rbf.csv');
+writetable(results_rbf, 'results/tune_rbf_v1.csv');
 
 figure;
 h = heatmap(string(box), string(kernel), recall_grid);
@@ -79,4 +79,4 @@ h.CellLabelFormat = '%.1f';
 xlabel('Box Constraint');
 ylabel('Kernel Scale');
 title('RBF SVM malignant recall, 5-fold CV');
-saveas(gcf, 'results/figures/rbf_recall_heatmap.png');
+saveas(gcf, 'results/figures/rbf_recall_heatmap_v1.png');
