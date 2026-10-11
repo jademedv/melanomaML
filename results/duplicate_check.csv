@@ -1,0 +1,8 @@
+TestIndex,TrainIndex,TestImage,TrainImage,TestLabel,TrainLabel,Distance
+4,2017,melanoma_10003.jpg,melanoma_2812.jpg,benign,benign,0
+97,986,melanoma_10096.jpg,melanoma_1885.jpg,benign,benign,0
+548,8589,melanoma_10152.jpg,melanoma_8588.jpg,malignant,malignant,0
+623,9026,melanoma_10227.jpg,melanoma_9025.jpg,malignant,malignant,0
+927,7537,melanoma_10531.jpg,melanoma_7536.jpg,malignant,malignant,0
+947,6517,melanoma_10551.jpg,melanoma_6516.jpg,malignant,malignant,0
+998,8398,melanoma_10602.jpg,melanoma_8397.jpg,malignant,malignant,0
