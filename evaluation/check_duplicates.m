@@ -69,3 +69,16 @@ if num_top > 0
     end
     saveas(gcf, 'results/figures/duplicates.png');
 end
+
+% distribution of nearest train image distance for every test image
+figure;
+histogram(d_tt, 50);
+hold on;
+xline(threshold, '--r');
+hold off;
+xlabel('Distance to nearest training image');
+ylabel('Number of test images');
+title('Nearest-neighbour distance (test vs train)');
+saveas(gcf, 'results/figures/duplicate_distances_all.png');
+writetable(table((1:numel(d_tt))', d_tt(:), 'VariableNames', {'TestIndex', 'Distance'}), ...
+    'results/duplicate_distances_all.csv');
