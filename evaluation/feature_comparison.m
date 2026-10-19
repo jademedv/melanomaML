@@ -1,4 +1,5 @@
-load('../data/train_features.mat');
+addpath('scripts/');
+load('data/train_features.mat');
 
 response = train_features.Label;
 
@@ -42,16 +43,18 @@ for i = 1:numel(feature_sets)
 
     fprintf("Running RBF SVM with %s features...\n", feature_names{i});
 
-    % Example model: RBF SVM
+    % RBF SVM
     model = fitcsvm(predictors, response, ...
         'KernelFunction', 'gaussian', ...
+        'KernelScale', 7, ...
+        'BoxConstraint', 150, ...
         'Standardize', true, ...
         'ClassNames', classOrder, ...
         'CVPartition', cvp);
 
-    predicted = kfoldPredict(model);
+    [predicted, score] = kfoldPredict(model);
 
-    metrics = calculate_metrics(response, predicted);
+    metrics = calculate_metrics(response, predicted, score(:, 2));
 
     metrics.FeatureSet = string(feature_names{i});
     metrics.Model = "RBF SVM";
@@ -66,6 +69,6 @@ results = movevars(results, {'Model', 'FeatureSet'}, 'Before', 1);
 
 disp(results);
 
-writetable(results, '../results/feature_comparison_rbf.csv');
+writetable(results, 'results/feature_comparison_rbf.csv');
 
 disp("Feature comparison results saved");
