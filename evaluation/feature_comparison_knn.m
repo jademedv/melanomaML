@@ -1,5 +1,6 @@
 % Baseline cross-validation comparisons, not final tuned-model performance
-load('../data/train_features.mat');
+addpath('scripts/');
+load('data/train_features.mat');
 
 response = train_features.Label;
 
@@ -40,13 +41,16 @@ for i = 1:numel(feature_sets)
     fprintf("Running k-NN with %s features...\n", feature_names{i});
 
     model = fitcknn(predictors, response, ...
+        'NumNeighbors', 70, ...
+        'Distance', 'cityblock', ...
+        'DistanceWeight', 'squaredinverse', ...
         'Standardize', true, ...
         'ClassNames', classOrder, ...
         'CVPartition', cvp);
 
-    predicted = kfoldPredict(model);
+    [predicted, score] = kfoldPredict(model);
 
-    metrics = calculate_metrics(response, predicted);
+    metrics = calculate_metrics(response, predicted, score(:, 2));
 
     metrics.FeatureSet = string(feature_names{i});
     metrics.Model = "k-NN";
@@ -61,6 +65,6 @@ results = movevars(results, {'Model', 'FeatureSet'}, 'Before', 1);
 
 disp(results);
 
-writetable(results, '../results/feature_comparison_knn.csv');
+writetable(results, 'results/feature_comparison_knn.csv');
 
 disp("k-NN feature comparison results saved");
